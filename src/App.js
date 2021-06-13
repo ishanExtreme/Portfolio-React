@@ -1,3 +1,4 @@
+import Footer from "./Components/Footer";
 import PlanCard from "./Components/PlanCard";
 import QuoteCard from "./Components/QuoteCard";
 import About from "./Pages/About";
@@ -12,6 +13,7 @@ function App() {
       <Hero />
       <About />
       <Projects />
+      <Footer />
     </div>
   );
 }

@@ -86,7 +86,7 @@ function About(props) {
                     align="center"
                     className={classes.Abouttext}
                     >
-                        Hi Iam Ishan Mishra, currently studying BTech in Computer Science and Engineering at Indian Institute of Information Technology, Kalyani(2019-2023). I enjoy exploring different fields, have special interest in backend fields like communication protocols, web servers, proxies....I also write blogs on dev.to(link below) and ocassional youtube videos too. 
+                        Hi I am Ishan Mishra, currently studying BTech in Computer Science and Engineering at Indian Institute of Information Technology, Kalyani(2019-2023). I enjoy exploring different fields, have special interest in backend fields like communication protocols, web servers, proxies....I also write blogs on dev.to(link below) and ocassional youtube videos too. 
                     </Typography>
                 </Grid>
 
