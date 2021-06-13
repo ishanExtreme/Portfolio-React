@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,9 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 import PlanCard from '../Components/PlanCard';
 import QuoteCard from '../Components/QuoteCard';
+import useApi from '../hooks/useApi';
+import plansApi from '../api/plans';
+import quoteApi from '../api/quote';
 
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 
@@ -54,6 +57,46 @@ function About(props) {
 
     const classes = useStyles();
 
+    const [plans, setPlans] = useState([]);
+    const [quote, setQuote] = useState("");
+
+    const getPlansApi = useApi(plansApi.plans);
+    const getQuoteApi = useApi(quoteApi.quote);
+
+    const getPlans = async ()=>{
+        const result = await getPlansApi.request();
+
+        if(result.ok)
+        {
+            result.data.plans.forEach((plan)=>{
+                setPlans(prevPlans=> [...prevPlans, plan.value])
+            })
+            
+        }
+    }
+    
+    const getQuote = async ()=>{
+        const result = await getQuoteApi.request();
+
+        if(result.ok)
+        {
+            setQuote(result.data.quote)   
+        }
+    }   
+
+    useEffect(()=>{
+
+        getPlans();
+        getQuote();
+
+        return ()=> 
+        {
+        setPlans([]);
+        setQuote("");
+        }
+
+    }, [])
+
     return (
 
     <ThemeProvider theme={theme}>
@@ -66,7 +109,7 @@ function About(props) {
             <Hidden mdDown >
                 <Grid item xs={3} style={{marginBottom: '15px'}}>
                     <div className={classes.centerDiv}>
-                        <PlanCard />
+                        <PlanCard plans={plans}/>
                     </div>
                 </Grid>
 
@@ -92,7 +135,7 @@ function About(props) {
 
                 <Grid item xs={3}>
                     <div className={classes.centerDiv}>
-                        <QuoteCard />
+                        <QuoteCard quote={quote}/>
                     </div>
                 </Grid>
 
@@ -299,13 +342,13 @@ function About(props) {
 
                 <Grid item xs={12}>
                     <div className={classes.centerDiv} style={{marginTop:'10px'}}>
-                        <PlanCard />
+                        <PlanCard plans={plans}/>
                     </div>
                 </Grid>
 
                 <Grid item xs={12}>
                     <div className={classes.centerDiv} style={{marginTop:'5px'}}>
-                        <QuoteCard />
+                        <QuoteCard quote={quote}/>
                     </div>
                 </Grid>
 

@@ -8,12 +8,6 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core'
 
 
-// temp data
-const plans = [
-    "Participating in Hackbout2.0",
-    "Preparing article about TCP and UDP",
-    "Preparing youtube video about github"
-];
 
 const useStyles = makeStyles((theme)=>{
     return {
@@ -45,7 +39,7 @@ const theme = createMuiTheme({
 });
 
 
-function PlanCard(props) {
+function PlanCard({plans}) {
 
     const classes = useStyles();
 
@@ -59,7 +53,17 @@ function PlanCard(props) {
             Weekly Plan
            </Typography>
            <DateRangeIcon color="primary" fontSize="large" className={classes.dateIcon}/>
-           {plans.map((plan, index)=>{
+           {
+           plans.length===0?
+           <Typography
+            variant="subtitle2"
+            color="secondary"
+            className={classes.plans}
+            >
+                Nothing special this week :)
+            </Typography>
+            :
+           plans.map((plan, index)=>{
                return (
                 <Typography
                 key={index}
@@ -70,7 +74,8 @@ function PlanCard(props) {
                     {plan}
                 </Typography>
                );
-           })}
+           })
+           }
        </Paper>
     </ThemeProvider>
     );

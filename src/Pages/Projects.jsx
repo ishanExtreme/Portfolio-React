@@ -1,71 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import ProjectCard from '../Components/ProjectCard';
 
-const projects = [
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-    {
-        title: "RealTime Truth, Dare & Stare",
-        date: "May 2021",
-        stack: "Node, React, Express, MongoDB, Twilio",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dignissim cras tincidunt lobortis feugiat vivamus.",
-        url: "https://truthdarelive.me/"
-    },
-   
-]
+import ProjectCard from '../Components/ProjectCard';
+import useApi from '../hooks/useApi';
+import projectApi from '../api/project';
 
 
 
@@ -97,6 +40,29 @@ const theme = createMuiTheme({
 function Projects(props) {
 
     const classes = useStyles();
+    
+    const [projects, setProjects] = useState([]);
+
+    const getProjectsApi = useApi(projectApi.projects);
+
+    const getProjects = async()=>{
+        const result = await getProjectsApi.request();
+
+        if(result.ok)
+        {
+            result.data.projects.forEach((project)=>{
+                setProjects(prevProjects=> [...prevProjects, project])
+            })
+            
+        }
+    };
+
+    useEffect(()=>{
+
+        getProjects();
+        
+        return ()=> setProjects([]);
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>

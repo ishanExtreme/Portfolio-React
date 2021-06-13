@@ -8,9 +8,6 @@ import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 
-// temp data
-const quote = "Everything Happens For Our Own Good!!!";
-
 const useStyles = makeStyles((theme)=>{
     return {
        
@@ -41,7 +38,7 @@ const theme = createMuiTheme({
 });
 
 
-function QuoteCard(props) {
+function QuoteCard({quote}) {
 
     const classes = useStyles();
 
